@@ -260,46 +260,35 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 void rgb_matrix_update_pwm_buffers(void);
 #endif
 
-const rgblight_segment_t PROGMEM base_layer[]       = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_WHITE});
-const rgblight_segment_t PROGMEM function_layer[]   = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_PURPLE});
-const rgblight_segment_t PROGMEM navigation_layer[] = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_CYAN});
-const rgblight_segment_t PROGMEM media_layer[]      = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_BLUE});
-const rgblight_segment_t PROGMEM pointer_layer[]    = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_ORANGE});
-const rgblight_segment_t PROGMEM numeral_layer[]    = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_GREEN});
-const rgblight_segment_t PROGMEM symbols_layer[]    = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_GOLD});
-const rgblight_segment_t PROGMEM capslock_layer[]   = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_RED});
-
-const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(base_layer,
-                                                                               function_layer,   // Overrides caps lock layer
-                                                                               navigation_layer, // Overrides other layers
-                                                                               media_layer,      // Overrides other layers
-                                                                               pointer_layer,    // Overrides other layers
-                                                                               numeral_layer,    // Overrides other layers
-                                                                               symbols_layer,    // Overrides other layers
-                                                                               capslock_layer    // Overrides other layers
-);
-
 void keyboard_post_init_user(void) {
-    // Enable the LED layers
-    rgblight_layers = my_rgb_layers;
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_sethsv_noeeprom(50, 50, 50);
 }
 
-layer_state_t default_layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(0, layer_state_cmp(state, LAYER_BASE));
-    return state;
-}
-
-bool led_update_user(led_t led_state) {
-    rgblight_set_layer_state(7, led_state.caps_lock);
-    return true;
-}
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(1, layer_state_cmp(state, LAYER_FUNCTION));
-    rgblight_set_layer_state(2, layer_state_cmp(state, LAYER_NAVIGATION));
-    rgblight_set_layer_state(3, layer_state_cmp(state, LAYER_MEDIA));
-    rgblight_set_layer_state(4, layer_state_cmp(state, LAYER_POINTER));
-    rgblight_set_layer_state(5, layer_state_cmp(state, LAYER_NUMERAL));
-    rgblight_set_layer_state(5, layer_state_cmp(state, LAYER_SYMBOLS));
-    return state;
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    if (host_keyboard_led_state().caps_lock) {
+        rgb_matrix_sethsv_noeeprom(HSV_RED);
+        return false;
+    }
+    switch (get_highest_layer(layer_state | default_layer_state)) {
+        case LAYER_FUNCTION:
+            rgb_matrix_sethsv_noeeprom(HSV_ORANGE);
+            break;
+        case LAYER_NAVIGATION:
+            rgb_matrix_sethsv_noeeprom(HSV_CYAN);
+            break;
+        case LAYER_MEDIA:
+            rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
+            break;
+        case LAYER_POINTER:
+            rgb_matrix_sethsv_noeeprom(HSV_BLUE);
+            break;
+        case LAYER_NUMERAL:
+            rgb_matrix_sethsv_noeeprom(HSV_GREEN);
+            break;
+        case LAYER_SYMBOLS:
+            rgb_matrix_sethsv_noeeprom(HSV_GOLD);
+            break;
+    }
+    return false;
 }
