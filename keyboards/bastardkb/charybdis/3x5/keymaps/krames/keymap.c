@@ -46,10 +46,10 @@ static uint16_t auto_pointer_layer_timer = 0;
 #endif     // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 // #define ESC_MED LT(LAYER_FUNCTION, KC_ESC)
-#define ESC_MED LT(LAYER_NUMERAL, KC_ESC)
+#define ESC_MED LT(LAYER_FUNCTION, KC_ESC)
 #define SPC_NAV LT(LAYER_NAVIGATION, KC_SPC)
-#define TAB_FUN LT(LAYER_SYMBOLS, KC_TAB)
-#define ENT_SYM LT(LAYER_FUNCTION, KC_ENT)
+#define TAB_FUN LT(LAYER_NUMERAL, KC_TAB)
+#define ENT_SYM LT(LAYER_SYMBOLS, KC_ENT)
 #define BSP_NUM LT(LAYER_MEDIA, KC_BSPC)
 #define _L_PTR(KC) LT(LAYER_POINTER, KC)
 
@@ -66,7 +66,7 @@ static uint16_t auto_pointer_layer_timer = 0;
        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, \
        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, \
        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, \
-                      ESC_MED, SPC_NAV, TAB_FUN, BSP_NUM, ENT_SYM
+                      XXXXXXX, SPC_NAV, TAB_FUN, BSP_NUM, ENT_SYM
 
 /** Convenience row shorthands. */
 #define _______________DEAD_HALF_ROW_______________ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
@@ -95,7 +95,7 @@ static uint16_t auto_pointer_layer_timer = 0;
     _______________DEAD_HALF_ROW_______________, KC_PSCR,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
     _______________DEAD_HALF_ROW_______________, KC_SCRL,   KC_F4,   KC_F5,   KC_F6,  KC_F11, \
     ______________HOME_ROW_GACS_L______________, KC_PAUS,   KC_F1,   KC_F2,   KC_F3,  KC_F10, \
-                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______
+                      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
 /**
  * \brief Media layer.
@@ -137,11 +137,11 @@ static uint16_t auto_pointer_layer_timer = 0;
  * are in the standard numpad locations with symbols in the remaining positions.
  * `KC_DOT` is duplicated from the base layer.
  */
-#define LAYOUT_LAYER_NUMERAL                                                                  \
-    _______________DEAD_HALF_ROW_______________, KC_7,    KC_8,    KC_9, KC_LBRC, KC_RBRC, \
-    _______________DEAD_HALF_ROW_______________, KC_4,    KC_5,    KC_6, KC_MINS,  KC_EQL, \
-    ______________HOME_ROW_GACS_L______________, KC_1,    KC_2,    KC_3, KC_GRV,  KC_BSLS, \
-                       _______,    XXXXXXX, XXXXXXX, KC_DOT, KC_0
+#define LAYOUT_LAYER_NUMERAL                                                               \
+    _______________DEAD_HALF_ROW_______________, XXXXXXX, KC_7,    KC_8,    KC_9, KC_EQL,  \
+    _______________DEAD_HALF_ROW_______________, XXXXXXX, KC_4,    KC_5,    KC_6, KC_MINS, \
+    ______________HOME_ROW_GACS_L______________, KC_0,    KC_1,    KC_2,    KC_3, KC_DOT,  \
+                      XXXXXXX, XXXXXXX, _______, KC_BSPC, KC_ENT
 
 /**
  * \brief Symbols layer.
@@ -151,10 +151,10 @@ static uint16_t auto_pointer_layer_timer = 0;
  * `KC_RPRN`.
  */
 #define LAYOUT_LAYER_SYMBOLS                                                                  \
-    _______________DEAD_HALF_ROW_______________, KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR, \
-    _______________DEAD_HALF_ROW_______________, KC_COLN,  KC_DLR, KC_PERC, KC_CIRC, KC_PLUS, \
-    ______________HOME_ROW_GACS_L______________, KC_TILD, KC_EXLM,   KC_AT, KC_HASH, KC_PIPE, \
-                      KC_LPRN, KC_RPRN, _______, KC_UNDS, XXXXXXX
+    KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR, _______________DEAD_HALF_ROW_______________, \
+    KC_COLN,  KC_DLR, KC_PERC, KC_CIRC, KC_PLUS, _______________DEAD_HALF_ROW_______________, \
+    KC_TILD, KC_EXLM,   KC_AT, KC_HASH, KC_PIPE, ______________HOME_ROW_GACS_R______________, \
+                      KC_LPRN, KC_RPRN, XXXXXXX, XXXXXXX, _______
 
 /**
  * \brief Add Home Row mod to a layout.
@@ -259,3 +259,47 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 // rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
 #endif
+
+const rgblight_segment_t PROGMEM base_layer[]       = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_WHITE});
+const rgblight_segment_t PROGMEM function_layer[]   = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_PURPLE});
+const rgblight_segment_t PROGMEM navigation_layer[] = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_CYAN});
+const rgblight_segment_t PROGMEM media_layer[]      = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_BLUE});
+const rgblight_segment_t PROGMEM pointer_layer[]    = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_ORANGE});
+const rgblight_segment_t PROGMEM numeral_layer[]    = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_GREEN});
+const rgblight_segment_t PROGMEM symbols_layer[]    = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_GOLD});
+const rgblight_segment_t PROGMEM capslock_layer[]   = RGBLIGHT_LAYER_SEGMENTS({1, 36, HSV_RED});
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(base_layer,
+                                                                               function_layer,   // Overrides caps lock layer
+                                                                               navigation_layer, // Overrides other layers
+                                                                               media_layer,      // Overrides other layers
+                                                                               pointer_layer,    // Overrides other layers
+                                                                               numeral_layer,    // Overrides other layers
+                                                                               symbols_layer,    // Overrides other layers
+                                                                               capslock_layer    // Overrides other layers
+);
+
+void keyboard_post_init_user(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(0, layer_state_cmp(state, LAYER_BASE));
+    return state;
+}
+
+bool led_update_user(led_t led_state) {
+    rgblight_set_layer_state(7, led_state.caps_lock);
+    return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(1, layer_state_cmp(state, LAYER_FUNCTION));
+    rgblight_set_layer_state(2, layer_state_cmp(state, LAYER_NAVIGATION));
+    rgblight_set_layer_state(3, layer_state_cmp(state, LAYER_MEDIA));
+    rgblight_set_layer_state(4, layer_state_cmp(state, LAYER_POINTER));
+    rgblight_set_layer_state(5, layer_state_cmp(state, LAYER_NUMERAL));
+    rgblight_set_layer_state(5, layer_state_cmp(state, LAYER_SYMBOLS));
+    return state;
+}
