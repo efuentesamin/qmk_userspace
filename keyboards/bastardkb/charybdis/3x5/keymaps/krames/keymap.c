@@ -303,6 +303,8 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         case LAYER_SYMBOLS:
             rgb_matrix_sethsv_noeeprom(HSV_GOLD);
             break;
+        default:
+            rgb_matrix_sethsv_noeeprom(50, 50, 100);
     }
     return false;
 }
