@@ -33,9 +33,9 @@ enum charybdis_keymap_layers {
 enum combos { WE_ESC, SD_SUP, IO_BSP, KL_ENT };
 
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM sd_combo[] = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM sd_combo[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM kl_combo[] = {KC_K, KC_J, COMBO_END};
 
 combo_t key_combos[] = {
     [WE_ESC] = COMBO(we_combo, KC_ESC),
