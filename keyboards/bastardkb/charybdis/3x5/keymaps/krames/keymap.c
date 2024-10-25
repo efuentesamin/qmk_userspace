@@ -30,6 +30,20 @@ enum charybdis_keymap_layers {
     LAYER_SYMBOLS,
 };
 
+enum combos { WE_ESC, SD_SUP, IO_BSP, KL_ENT };
+
+const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM sd_combo[] = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
+
+combo_t key_combos[] = {
+    [WE_ESC] = COMBO(we_combo, KC_ESC),
+    [SD_SUP] = COMBO(sd_combo, KC_DEL),
+    [IO_BSP] = COMBO(io_combo, KC_BSPC),
+    [KL_ENT] = COMBO(kl_combo, KC_ENT),
+};
+
 // Automatically enable sniping-mode on the pointer layer.
 // #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
